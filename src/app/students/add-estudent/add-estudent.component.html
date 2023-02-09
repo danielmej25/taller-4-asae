@@ -1,0 +1,299 @@
+<div class="container">
+  <div class="boton" style="text-align: left; padding-bottom: 2rem">
+    <p-toggleButton
+      onLabel="Activar Validaciones"
+      [ngModel]="validate"
+      (onChange)="setValidations(validate)"
+      offLabel="Desactivar Validaciones"
+      onIcon="pi pi-check"
+      offIcon="pi pi-times"
+      [style]="{ width: '10em' }"
+    ></p-toggleButton>
+  </div>
+  <form [formGroup]="studentForm" (ngSubmit)="addStudent()">
+    <ul class="alert alert-danger">
+      <li *ngFor="let error of errors">
+        {{ error }}
+      </li>
+    </ul>
+    <div class="field">
+      <span class="p-float-label">
+        <input type="text" pInputText formControlName="code" inputId="code" />
+        <p-button
+          icon="pi pi-search"
+          [loading]="loadingSearch"
+          (onClick)="searchStudent(studentForm.value.code)"
+        ></p-button>
+        <label for="code">Código: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('code')?.invalid &&
+            (studentForm.get('code')?.touched || studentForm.get('code')?.dirty)
+          "
+        >
+          El código es obligatorio y solo deben ser números
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="idTypes"
+        formControlName="idType"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="name"
+      ></p-dropdown>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="idNumber"
+          inputId="idNumber"
+        />
+        <label for="idNumber">Numero de indentificación: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('idNumber')?.invalid &&
+            (studentForm.get('idNumber')?.touched ||
+              studentForm.get('idNumber')?.dirty)
+          "
+        >
+          El número de identificación es obligatorio y solo deben ser números
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input type="text" pInputText formControlName="names" inputId="names" />
+        <label for="names">Nombres: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('names')?.invalid &&
+            (studentForm.get('names')?.touched ||
+              studentForm.get('names')?.dirty)
+          "
+        >
+          El Nombre es obligatorio, solo deben contener letras y debe tener un
+          minimo de 5 caracteres y maximo 45.
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="lastNames"
+          inputId="lastNames"
+        />
+        <label for="lastNames">Apellidos: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('lastNames')?.invalid &&
+            (studentForm.get('lastNames')?.touched ||
+              studentForm.get('lastNames')?.dirty)
+          "
+        >
+          Los apellidos son obligatorios, solo deben contener letras y debe
+          tener minimo 5 caracteres y maximo 45.
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="collegeEmail"
+          inputId="collegeEmail"
+        />
+        <label for="collegeEmail">Email universitario: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('collegeEmail')?.invalid &&
+            (studentForm.get('collegeEmail')?.touched ||
+              studentForm.get('collegeEmail')?.dirty)
+          "
+        >
+          El Email universitario es obligatorio y debe tener un formato adecuado
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="alternativeEmail"
+          inputId="alternativeEmail"
+        />
+        <label for="alternativeEmail">Email Alternativo: </label>
+        <small
+          class="p-error block"
+          *ngIf="studentForm.get('alternativeEmail')?.invalid"
+        >
+          El Email alternativo debe tener un formato adecuado
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input type="text" pInputText formControlName="city" inputId="city" />
+        <label for="city">Ciudad: </label>
+        <small class="p-error block" *ngIf="studentForm.get('city')?.invalid">
+          La ciudad solo puede tener letras y un minimo de dos caracteres
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="workCompany"
+          inputId="workCompany"
+        />
+        <label for="workCompany">Empresa: </label>
+        <small
+          class="p-error block"
+          *ngIf="studentForm.get('workCompany')?.invalid"
+        >
+          La empresa solo puede tener letras y un minimo de dos caracteres
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="undergraduateDegree"
+          inputId="undergraduateDegree"
+        />
+        <label for="undergraduateDegree">Titulo de grado: </label>
+        <small
+          class="p-error block"
+          *ngIf="studentForm.get('undergraduateDegree')?.invalid"
+        >
+          El Titulo de grado solo puede tener letras y un minimo de dos
+          caracteres
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          formControlName="phoneNumber"
+          inputId="phoneNumber"
+        />
+        <label for="phoneNumber">Numero de telefono: </label>
+        <small
+          class="p-error block"
+          *ngIf="
+            studentForm.get('phoneNumber')?.invalid &&
+            (studentForm.get('phoneNumber')?.touched ||
+              studentForm.get('phoneNumber')?.dirty)
+          "
+        >
+          El número de telefono debe contener 10 números
+        </small>
+      </span>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="genders"
+        formControlName="gender"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Genero:"
+      ></p-dropdown>
+      <small
+        class="p-error block"
+        *ngIf="
+          studentForm.get('gender')?.invalid &&
+          (studentForm.get('gender')?.touched ||
+            studentForm.get('gender')?.dirty)
+        "
+      >
+        El genero es obligatorio
+      </small>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="populationTypes"
+        formControlName="typePopulation"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Tipo de población:"
+      ></p-dropdown>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="ethnicities"
+        formControlName="ethnicity"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Etnia:"
+      ></p-dropdown>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="masterStatus"
+        formControlName="masterStatus"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Estado maestria:"
+      ></p-dropdown>
+    </div>
+
+    <div class="field">
+      <p-dropdown
+        [options]="modality"
+        formControlName="modality"
+        [filter]="false"
+        optionLabel="name"
+        optionValue="name"
+        placeholder="Modalidad:"
+      ></p-dropdown>
+    </div>
+    <ul class="alert alert-danger">
+      <li *ngFor="let error of errors">
+        {{ error }}
+      </li>
+    </ul>
+
+    <div class="boton" style="text-align: center">
+      <p-button type="submit" [disabled]="studentForm.invalid">Enviar</p-button>
+      <p-button [disabled]="!searched" (onClick)="updateStudent()"
+        >Actualizar</p-button
+      >
+    </div>
+  </form>
+</div>

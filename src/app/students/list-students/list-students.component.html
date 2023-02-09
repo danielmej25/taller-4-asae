@@ -1,0 +1,32 @@
+<p-button label="Recargar" (onClick)="ngOnInit()"></p-button>
+
+<p-table [value]="students">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Código</th>
+      <th>Identificación</th>
+      <th>Nombres</th>
+      <th>Email</th>
+      <th>Titulo de pregrado</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-student>
+    <tr>
+      <td>{{ student.code }}</td>
+      <td>{{ student.idNumber }}</td>
+      <td>{{ student.names }} {{ student.lastNames }}</td>
+      <td>{{ student.collegeEmail }}</td>
+      <td>{{ student.undergraduateDegree }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-times"
+          class="p-button-rounded p-button-danger p-button-text"
+          (click)="deleteStudent(student.code)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
